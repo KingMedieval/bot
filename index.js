@@ -8,9 +8,7 @@ const { TOKEN, PREFIX } = require("./config.json");
 
 const client = new Client({ disableEveryone: true, disabledEvents: ["TYPING_START"] });
 
-//client.login(discTOKEN);
-client.login("MzA5MzEyMDg4NDkxMjk0NzIw.XuI-lQ.Hz193F0xNssh_LIS-mtMBTm7Dec");
-//client.login(TOKEN);
+client.login(TOKEN);
 client.commands = new Collection();
 client.prefix = PREFIX;
 client.queue = new Map();
