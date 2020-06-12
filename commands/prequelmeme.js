@@ -3,7 +3,7 @@ const { MessageEmbed } = require('discord.js');
 
 module.exports = {
   name: "prequelmeme",
-  description: "POGGERS",
+  description: "prequelPOGGERS",
   execute(message) {
     const embed = new MessageEmbed();
   	got('https://www.reddit.com/r/PrequelMemes/random/.json').then(response => {

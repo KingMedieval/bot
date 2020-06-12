@@ -3,7 +3,7 @@ const { MessageEmbed } = require('discord.js');
 
 module.exports = {
   name: "redmeme",
-  description: "POGGERS",
+  description: "☭POGGERS",
   execute(message) {
     const embed = new MessageEmbed();
   	got('https://www.reddit.com/r/CommunismMemes/random/.json').then(response => {
