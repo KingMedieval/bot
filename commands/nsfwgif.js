@@ -7,8 +7,8 @@ var sauce;
 module.exports = {
   name: "nsfwgif",
   description: "🔞",
-  if(!message.channel.nsfw){ message.channel.send("This command can only be used in channels marked nsfw."); return; }
   execute(message) {
+    if(!message.channel.nsfw){ message.channel.send("This command can only be used in channels marked nsfw."); return; }
     rndSauce = Math.floor(Math.random() * 3);
     if (rndSauce === 0) {
       sauce = 'https://www.reddit.com/r/NSFW_GIF/random/.json'
