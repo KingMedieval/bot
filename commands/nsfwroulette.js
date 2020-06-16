@@ -9,7 +9,7 @@ module.exports = {
   description: "🔞 roulette",
   execute(message) {
     if(!message.channel.nsfw){ message.channel.send("This command can only be used in channels marked nsfw."); return; }
-    rndSauce = Math.floor(Math.random() * 8);
+    rndSauce = Math.floor(Math.random() * 9);
     if (rndSauce === 0) {
       sauce = 'https://www.reddit.com/r/furry/random/.json'
     }
@@ -33,6 +33,9 @@ module.exports = {
     }
     else if (rndSauce === 7) {
       sauce = 'https://www.reddit.com/r/PokePorn/random/.json'
+    }
+    else if (rndSauce === 8) {
+      sauce = 'https://www.reddit.com/r/Overwatch_Porn/random/.json'
     }
   	got(sauce).then(response => {
   			let content = JSON.parse(response.body);
