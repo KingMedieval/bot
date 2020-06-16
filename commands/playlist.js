@@ -6,11 +6,16 @@ const youtube = new YouTubeAPI(YOUTUBE_API_KEY);
 
 module.exports = {
   name: "playlist",
-  aliases: ['pl'],
+  cooldown: 3,
+  aliases: ["pl"],
   description: "Play a playlist from youtube",
   async execute(message, args) {
     const { PRUNING } = require("../config.json");
     const { channel } = message.member.voice;
+
+    const serverQueue = message.client.queue.get(message.guild.id);
+    if (serverQueue && channel !== message.guild.me.voice.channel)
+      return message.reply(`You must be in the same channel as ${message.client.user}`).catch(console.error);
 
     if (!args.length)
       return message
@@ -29,7 +34,6 @@ module.exports = {
     const url = args[0];
     const urlValid = pattern.test(args[0]);
 
-    const serverQueue = message.client.queue.get(message.guild.id);
     const queueConstruct = {
       textChannel: message.channel,
       channel,
@@ -79,19 +83,20 @@ module.exports = {
       }
     });
 
-    if (!PRUNING) {
-      let playlistEmbed = new MessageEmbed()
-        .setTitle(`${playlist.title}`)
-        .setDescription(queueConstruct.songs.map((song, index) => `${index + 1}. ${song.title}`))
-        .setURL(playlist.url)
-        .setColor("#F8AA2A");
+    let playlistEmbed = new MessageEmbed()
+      .setTitle(`${playlist.title}`)
+      .setURL(playlist.url)
+      .setColor("#F8AA2A")
+      .setTimestamp();
 
-      playlistEmbed.setTimestamp();
+    if (!PRUNING) {
+      playlistEmbed.setDescription(queueConstruct.songs.map((song, index) => `${index + 1}. ${song.title}`));
       if (playlistEmbed.description.length >= 2048)
         playlistEmbed.description =
           playlistEmbed.description.substr(0, 2007) + "\nPlaylist larger than character limit...";
-      message.channel.send(`${message.author} Started a playlist`, playlistEmbed);
     }
+
+    message.channel.send(`${message.author} Started a playlist`, playlistEmbed);
 
     if (!serverQueue) message.client.queue.set(message.guild.id, queueConstruct);
 
