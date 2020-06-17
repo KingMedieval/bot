@@ -9,7 +9,7 @@ module.exports = {
   description: "🔞 roulette",
   execute(message) {
     if(!message.channel.nsfw){ message.channel.send("This command can only be used in channels marked nsfw."); return; }
-    rndSauce = Math.floor(Math.random() * 10);
+    rndSauce = Math.floor(Math.random() * 12);
     if (rndSauce === 0) {
       sauce = 'https://www.reddit.com/r/furry/random/.json'
     }
