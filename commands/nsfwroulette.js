@@ -53,7 +53,7 @@ module.exports = {
       sauce = 'https://www.reddit.com/r/HotStuffNSFW/random/.json'
     }
     else if (rndSauce === 14) {
-      sauce = 'https://www.reddit.com/r/HotStuffNSFW/random/.json'
+      sauce = 'https://www.reddit.com/r/NSFW_Korea/random/.json'
     }
   	got(sauce).then(response => {
   			let content = JSON.parse(response.body);
