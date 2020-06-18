@@ -9,9 +9,9 @@ module.exports = {
   description: "🔞 roulette",
   execute(message) {
     if(!message.channel.nsfw){ message.channel.send("This command can only be used in channels marked nsfw."); return; }
-    rndSauce = Math.floor(Math.random() * 15);
+    rndSauce = Math.floor(Math.random() * 24);
     if (rndSauce === 0) {
-      sauce = 'https://www.reddit.com/r/furry/random/.json'
+      sauce = 'https://www.reddit.com/r/furryporn/random/.json'
     }
     else if (rndSauce === 1) {
       sauce = 'https://www.reddit.com/r/rule34/random/.json'
@@ -55,6 +55,34 @@ module.exports = {
     else if (rndSauce === 14) {
       sauce = 'https://www.reddit.com/r/NSFW_Korea/random/.json'
     }
+    else if (rndSauce === 15) {
+      sauce = 'https://www.reddit.com/r/valorantrule34/random/.json'
+    }
+    else if (rndSauce === 16) {
+      sauce = 'https://www.reddit.com/r/lesbians/random/.json'
+    }
+    else if (rndSauce === 17) {
+      sauce = 'https://www.reddit.com/r/holdthemoan/random/.json'
+    }
+    else if (rndSauce === 18) {
+      sauce = 'https://www.reddit.com/r/RealAhegao/random/.json'
+    }
+    else if (rndSauce === 19) {
+      sauce = 'https://www.reddit.com/r/freeuse/random/.json'
+    }
+    else if (rndSauce === 20) {
+      sauce = 'https://www.reddit.com/r/gonewildcurvy/random/.json'
+    }
+    else if (rndSauce === 21) {
+      sauce = 'https://www.reddit.com/r/trashyboners/random/.json'
+    }
+    else if (rndSauce === 22) {
+      sauce = 'https://www.reddit.com/r/trashyboners/random/.json'
+    }
+    else if (rndSauce === 23) {
+      sauce = 'https://www.reddit.com/r/armpitfetish/random/.json'
+    }
+
   	got(sauce).then(response => {
   			let content = JSON.parse(response.body);
   			let nsfwrouletteNEWImage = content[0].data.children[0].data.url;
