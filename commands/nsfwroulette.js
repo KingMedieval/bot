@@ -9,7 +9,7 @@ module.exports = {
   description: "🔞 roulette",
   execute(message) {
     if(!message.channel.nsfw){ message.channel.send("This command can only be used in channels marked nsfw."); return; }
-    rndSauce = Math.floor(Math.random() * 25);
+    rndSauce = Math.floor(Math.random() * 42);
     if (rndSauce === 0) {
       sauce = 'https://www.reddit.com/r/furryporn/random/.json'
     }
@@ -85,7 +85,57 @@ module.exports = {
     else if (rndSauce === 24) {
       sauce = 'https://www.reddit.com/r/starwarsnsfw/random/.json'
     }
-
+    else if (rndSauce === 25) {
+      sauce = 'https://www.reddit.com/r/NSFW_Japan/random/.json'
+    }
+    else if (rndSauce === 26) {
+      sauce = 'https://www.reddit.com/r/Bisexy/random/.json'
+    }
+    else if (rndSauce === 27) {
+      sauce = 'https://www.reddit.com/r/gaybears/random/.json'
+    }
+    else if (rndSauce === 28) {
+      sauce = 'https://www.reddit.com/r/gaycumsluts/random/.json'
+    }
+    else if (rndSauce === 29) {
+      sauce = 'https://www.reddit.com/r/Blondes/random/.json'
+    }
+    else if (rndSauce === 30) {
+      sauce = 'https://www.reddit.com/r/brunette/random/.json'
+    }
+    else if (rndSauce === 31) {
+      sauce = 'https://www.reddit.com/r/grower/random/.json'
+    }
+    else if (rndSauce === 32) {
+      sauce = 'https://www.reddit.com/r/simps/random/.json'
+    }
+    else if (rndSauce === 33) {
+      sauce = 'https://www.reddit.com/r/HairyPussy/random/.json'
+    }
+    else if (rndSauce === 34) {
+      sauce = 'https://www.reddit.com/r/HairyArmpits/random/.json'
+    }
+    else if (rndSauce === 35) {
+      sauce = 'https://www.reddit.com/r/TittyDrop/random/.json'
+    }
+    else if (rndSauce === 36) {
+      sauce = 'https://www.reddit.com/r/BoltedOnMaxed/random/.json'
+    }
+    else if (rndSauce === 37) {
+      sauce = 'https://www.reddit.com/r/dirtysmall/random/.json'
+    }
+    else if (rndSauce === 38) {
+      sauce = 'https://www.reddit.com/r/PreggoPorn/random/.json'
+    }
+    else if (rndSauce === 39) {
+      sauce = 'https://www.reddit.com/r/collegesluts/random/.json'
+    }
+    else if (rndSauce === 40) {
+      sauce = 'https://www.reddit.com/r/Just18/random/.json'
+    }
+    else if (rndSauce === 41) {
+      sauce = 'https://www.reddit.com/r/Hotchickswithtattoos/random/.json'
+    }
   	got(sauce).then(response => {
   			let content = JSON.parse(response.body);
   			let nsfwrouletteNEWImage = content[0].data.children[0].data.url;
