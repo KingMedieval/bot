@@ -136,6 +136,9 @@ module.exports = {
     else if (rndSauce === 41) {
       sauce = 'https://www.reddit.com/r/Hotchickswithtattoos/random/.json'
     }
+    else if (rndSauce === 42) {
+      sauce = 'https://www.reddit.com/r/Rule34LifeisStrange/random/.json'
+    }
   	got(sauce).then(response => {
   			let content = JSON.parse(response.body);
   			let nsfwrouletteNEWImage = content[0].data.children[0].data.url;
