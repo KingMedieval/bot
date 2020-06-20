@@ -9,7 +9,7 @@ module.exports = {
   description: "🔞 roulette",
   execute(message) {
     if(!message.channel.nsfw){ message.channel.send("This command can only be used in channels marked nsfw."); return; }
-    rndSauce = Math.floor(Math.random() * 42);
+    rndSauce = Math.floor(Math.random() * 54);
     if (rndSauce === 0) {
       sauce = 'https://www.reddit.com/r/furryporn/random/.json'
     }
@@ -138,6 +138,39 @@ module.exports = {
     }
     else if (rndSauce === 42) {
       sauce = 'https://www.reddit.com/r/Rule34LifeisStrange/random/.json'
+    }
+    else if (rndSauce === 43) {
+      sauce = 'https://www.reddit.com/r/LadyBonerOFaces/random/.json'
+    }
+    else if (rndSauce === 44) {
+      sauce = 'https://www.reddit.com/r/ladybonersgw/random/.json'
+    }
+    else if (rndSauce === 45) {
+      sauce = 'https://www.reddit.com/r/cocklady/random/.json'
+    }
+    else if (rndSauce === 46) {
+      sauce = 'https://www.reddit.com/r/Fisting/random/.json'
+    }
+    else if (rndSauce === 47) {
+      sauce = 'https://www.reddit.com/r/insertions/random/.json'
+    }
+    else if (rndSauce === 48) {
+      sauce = 'https://www.reddit.com/r/insertions/random/.json'
+    }
+    else if (rndSauce === 49) {
+      sauce = 'https://www.reddit.com/r/PublicBoys/random/.json'
+    }
+    else if (rndSauce === 50) {
+      sauce = 'https://www.reddit.com/r/ttotm/random/.json'
+    }
+    else if (rndSauce === 51) {
+      sauce = 'https://www.reddit.com/r/squidsgonewild/random/.json'
+    }
+    else if (rndSauce === 52) {
+      sauce = 'https://www.reddit.com/r/fursuitsex/random/.json'
+    }
+    else if (rndSauce === 53) {
+      sauce = 'https://www.reddit.com/r/watersports/random/.json'
     }
   	got(sauce).then(response => {
   			let content = JSON.parse(response.body);
