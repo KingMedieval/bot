@@ -172,7 +172,7 @@ module.exports = {
     else if (rndSauce === 53) {
       sauce = 'https://www.reddit.com/r/watersports/random/.json'
     }
-    got(rndSauce).then(response => {
+    got(sauce).then(response => {
         let content = JSON.parse(response.body);
         let nsfwGIFNEWImage = content[0].data.children[0].data.url;
         if (nsfwGIFNEWImage.toLowerCase().indexOf("https://redgifs.com") >= 0) {
