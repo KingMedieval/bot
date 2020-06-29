@@ -20,11 +20,26 @@ module.exports = {
       sauce = 'https://www.reddit.com/r/canthold/random/.json'
     }
   	got(sauce).then(response => {
-  			let content = JSON.parse(response.body);
-  			let nsfwGIFNEWImage = content[0].data.children[0].data.url;
-        message.channel.send(nsfwGIFNEWImage)
-  					.then(sent => console.log(`Sent a reply to ${sent.author.username}`))
-  			console.log('Bot responded with: ' + nsfwGIFNEWImage);
-  	}).catch(console.error);
+        let content = JSON.parse(response.body);
+        let nsfwGIFNEWImage = content[0].data.children[0].data.url;
+        if (nsfwGIFNEWImage.toLowerCase().indexOf("https://redgifs.com") >= 0) {
+          let redID = nsfwGIFNEWImage.slice(26);
+          redLink = `https://www.gifdeliverynetwork.com/${redID}`;
+          message.channel.send(redLink)
+            .then(sent => console.log(`Sent a reply to ${sent.author.username}`))
+          console.log('Bot responded with: ' + nsfwGIFNEWImage);
+        }
+        else if (nsfwGIFNEWImage.toLowerCase().indexOf("https://gfycat.com") >= 0) {
+          let gfyID = nsfwGIFNEWImage.slice(19);
+          gfyLink = `https://www.gifdeliverynetwork.com/${gfyID}`;
+          message.channel.send(gfyLink)
+            .then(sent => console.log(`Sent a reply to ${sent.author.username}`))
+          console.log('Bot responded with: ' + nsfwGIFNEWImage);
+        }
+        else {message.channel.send(nsfwGIFNEWImage)
+            .then(sent => console.log(`Sent a reply to ${sent.author.username}`))
+        console.log('Bot responded with: ' + nsfwGIFNEWImage);
+      }
+    }).catch(console.error);
   }
 };
