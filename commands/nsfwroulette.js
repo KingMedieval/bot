@@ -182,42 +182,42 @@ function roulette(message) {
       let nsfwGIFNEWImage = content[0].data.children[0].data.url;
       if (nsfwGIFNEWImage.toLowerCase().indexOf("https://i.redd.it") >= 0 || nsfwGIFNEWImage.toLowerCase().indexOf("https://i.imgur.com") >= 0 || nsfwGIFNEWImage.toLowerCase().indexOf("https://imgur.com") >= 0) {
         message.channel.send(nsfwGIFNEWImage)
-        .then(sent => console.log(`Sent a reply to ${sent.author.username}`))
+        .then(sent => sent.react('❌'))
       console.log('Bot responded with: ' + nsfwGIFNEWImage);
       }
       else if (nsfwGIFNEWImage.toLowerCase().indexOf("https://redgifs.com") >= 0) {
         let redID = nsfwGIFNEWImage.slice(26);
         redLink = `https://www.gifdeliverynetwork.com/${redID}`;
         message.channel.send(redLink)
-          .then(sent => console.log(`Sent a reply to ${sent.author.username}`))
+          .then(sent => sent.react('❌'))
         console.log('Bot responded with: ' + nsfwGIFNEWImage);
       }
       else if (nsfwGIFNEWImage.toLowerCase().indexOf("http://redgifs.com") >= 0) {
         let redID = nsfwGIFNEWImage.slice(25);
         redLink = `https://www.gifdeliverynetwork.com/${redID}`;
         message.channel.send(redLink)
-          .then(sent => console.log(`Sent a reply to ${sent.author.username}`))
+          .then(sent => sent.react('❌'))
         console.log('Bot responded with: ' + nsfwGIFNEWImage);
       }
       else if (nsfwGIFNEWImage.toLowerCase().indexOf("https://www.redgifs.com") >= 0) {
         let redID = nsfwGIFNEWImage.slice(30);
         redLink = `https://www.gifdeliverynetwork.com/${redID}`;
         message.channel.send(redLink)
-          .then(sent => console.log(`Sent a reply to ${sent.author.username}`))
+          .then(sent => sent.react('❌'))
         console.log('Bot responded with: ' + nsfwGIFNEWImage);
       }
       else if (nsfwGIFNEWImage.toLowerCase().indexOf("http://www.redgifs.com") >= 0) {
         let redID = nsfwGIFNEWImage.slice(29);
         redLink = `https://www.gifdeliverynetwork.com/${redID}`;
         message.channel.send(redLink)
-          .then(sent => console.log(`Sent a reply to ${sent.author.username}`))
+          .then(sent => sent.react('❌'))
         console.log('Bot responded with: ' + nsfwGIFNEWImage);
       }
       else if (nsfwGIFNEWImage.toLowerCase().indexOf("https://gfycat.com") >= 0) {
         let gfyID = nsfwGIFNEWImage.slice(19);
         gfyLink = `https://www.gifdeliverynetwork.com/${gfyID}`;
         message.channel.send(gfyLink)
-          .then(sent => console.log(`Sent a reply to ${sent.author.username}`))
+          .then(sent => sent.react('❌'))
         console.log('Bot responded with: ' + nsfwGIFNEWImage);
       }
       else {
