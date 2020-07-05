@@ -11,7 +11,8 @@ module.exports = {
   async execute(message, args) {
     let lyricsEmbed = new MessageEmbed();
     let lyricsEmbedTwo = new MessageEmbed();
-
+    let lyricsEmbedThree = new MessageEmbed();
+    let lyricsEmbedFour = new MessageEmbed();
     if (!args.length)
       return message.reply(`Usage: ${message.client.prefix}${module.exports.name} <Song Name>`).catch(console.error);
     const searchTitle = args.join(" ");
@@ -46,7 +47,7 @@ getSong(options).then(song => {
         message.channel.send(lyricsEmbed)
             .then(sent => console.log(`Sent a reply to ${sent.author.username}`));
       }
-      if (lyrics.length > 2048) {
+      if (lyrics.length > 2048 && 4096 > lyrics.length) {
         var trimmedlyrics = lyrics.substring(0, 2047);
         var trimmedlyricstwo = lyrics.substring(2047, lyrics.length);
         lyricsEmbed.setTitle(global.title);
@@ -56,6 +57,37 @@ getSong(options).then(song => {
             .then(sent => console.log(`Sent a reply to ${sent.author.username}`))
             .then(lyricsEmbedTwo.setDescription(trimmedlyricstwo))
             .then(message.channel.send(lyricsEmbedTwo));
+      }
+      if (lyrics.length > 4096 && 6144 > lyrics.length) {
+        var trimmedlyrics = lyrics.substring(0, 2047);
+        var trimmedlyricstwo = lyrics.substring(2047, 4095);
+        var trimmedlyricsthree = lyrics.substring(4095, lyrics.length);
+        lyricsEmbed.setTitle(global.title);
+        lyricsEmbed.setThumbnail(albumArtUrl);
+        lyricsEmbed.setDescription(trimmedlyrics);
+        message.channel.send(lyricsEmbed)
+            .then(sent => console.log(`Sent a reply to ${sent.author.username}`))
+            .then(lyricsEmbedTwo.setDescription(trimmedlyricstwo))
+            .then(message.channel.send(lyricsEmbedTwo))
+            .then(lyricsEmbedThree.setDescription(trimmedlyricsthree))
+            .then(message.channel.send(lyricsEmbedThree));
+      }
+      if (lyrics.length > 6144 && 8192 > lyrics.length) {
+        var trimmedlyrics = lyrics.substring(0, 2047);
+        var trimmedlyricstwo = lyrics.substring(2047, 4095);
+        var trimmedlyricsthree = lyrics.substring(4095, 6143);
+        var trimmedlyricsfour = lyrics.substring(6143, lyrics.length);
+        lyricsEmbed.setTitle(global.title);
+        lyricsEmbed.setThumbnail(albumArtUrl);
+        lyricsEmbed.setDescription(trimmedlyrics);
+        message.channel.send(lyricsEmbed)
+            .then(sent => console.log(`Sent a reply to ${sent.author.username}`))
+            .then(lyricsEmbedTwo.setDescription(trimmedlyricstwo))
+            .then(message.channel.send(lyricsEmbedTwo))
+            .then(lyricsEmbedThree.setDescription(trimmedlyricsthree))
+            .then(message.channel.send(lyricsEmbedThree))
+            .then(lyricsEmbedFour.setDescription(trimmedlyricsfour))
+            .then(message.channel.send(lyricsEmbedFour));
       }
     });
   });
