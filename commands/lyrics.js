@@ -3,6 +3,8 @@ const { GENIUS_API_KEY } = require("../config.json");
 const https = require('https');
 const { getLyrics , getSong } = require('genius-lyrics-api');
 
+//now with lyrics!
+
 global.title = ' ';
 
 module.exports = {
