@@ -16,7 +16,8 @@ module.exports = {
             return message.reply(`Usage: ${message.client.prefix}lyrics <Song Name>`).catch(console.error);
         else if (!args.length) {
           const song = queue.songs[0];
-          let response = await fetch(`https://api.ksoft.si/lyrics/search?q=${song.title}`, {
+          const search = song.title.join(" ");
+          let response = await fetch(`https://api.ksoft.si/lyrics/search?q=` + search, {
               headers: {
                   'Content-Type': 'application/json',
                   'Authorization': `Bearer ${KSOFT_API_KEY}`
