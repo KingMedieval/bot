@@ -4,7 +4,7 @@ const fetch = require('node-fetch');
 const { KSOFT_API_KEY } = require("../config.json");
 
 module.exports = {
-    name: "tmplyrics",
+    name: "lyrics",
     description: "Displays lyrics of given song name",
     async execute(message, args) {
 
