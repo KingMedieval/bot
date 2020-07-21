@@ -16,21 +16,30 @@ module.exports = {
             return message.reply(`Usage: ${message.client.prefix}lyrics <Song Name>`).catch(console.error);
         else if (!args.length) {
           const song = queue.songs[0];
-          const search = `${song.title}`;
+          let response = await fetch(`https://api.ksoft.si/lyrics/search?q=${song.title}`, {
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${KSOFT_API_KEY}`
+              }
+          }).then((res) => {
+              status = res.status;
+              return res.json()
+          });
         }
         else {
           const search = args.join(" ");
+          let response = await fetch('https://api.ksoft.si/lyrics/search?q=' + search, {
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${KSOFT_API_KEY}`
+              }
+          }).then((res) => {
+              status = res.status;
+              return res.json()
+          });
         }
 
-        let response = await fetch('https://api.ksoft.si/lyrics/search?q=' + search, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${KSOFT_API_KEY}`
-            }
-        }).then((res) => {
-            status = res.status;
-            return res.json()
-        });
+
 
         if (status == 200) {
             const title = response.data[0].name;
