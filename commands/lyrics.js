@@ -7,6 +7,7 @@ module.exports = {
     name: "lyrics",
     description: "Displays lyrics of given song name",
     async execute(message, args) {
+        var search = " ";
         const queue = message.client.queue.get(message.guild.id);
 
         if (!KSOFT_API_KEY)
@@ -16,10 +17,10 @@ module.exports = {
             return message.reply(`Usage: ${message.client.prefix}lyrics <Song Name>`).catch(console.error);
         else if (!args.length) {
           const song = queue.songs[0];
-          const global.search = song.title;
+          global.search = song.title;
         }
         else {
-          const global.search = args.join(" ");
+          global.search = args.join(" ");
         }
         let response = await fetch('https://api.ksoft.si/lyrics/search?q=' + search, {
             headers: {
