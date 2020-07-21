@@ -17,10 +17,10 @@ module.exports = {
             return message.reply(`Usage: ${message.client.prefix}lyrics <Song Name>`).catch(console.error);
         else if (!args.length) {
           const song = queue.songs[0];
-          global.search = song.title;
+          search = song.title;
         }
         else {
-          global.search = args.join(" ");
+          search = args.join(" ");
         }
         let response = await fetch('https://api.ksoft.si/lyrics/search?q=' + search, {
             headers: {
