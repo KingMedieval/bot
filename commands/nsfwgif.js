@@ -9,6 +9,7 @@ module.exports = {
   description: "🔞",
   execute(message) {
     gifs(message);
+  }
 };
 
 function gifs(message) {
