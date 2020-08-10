@@ -10,13 +10,13 @@ module.exports = {
 
     const inputText = args.join(" ");
 
-    let response = await fetch('https://yoda-api.appspot.com/api/v1/yodish?text=' + inputText).then((res) => {
+    let response = await fetch('https://api.funtranslations.com/translate/yoda.json?text=' + inputText).then((res) => {
       status = res.status;
       return res.json()
     });
 
     if (status == 200) {
-      const yodish = response.yodish;
+      const yodish = response.contents.translated;
       let yodishEmbed = new MessageEmbed();
       yodishEmbed.setDescription(yodish);
       yodishEmbed.setImage(`https://vignette.wikia.nocookie.net/lego-videogames/images/5/5f/Yoda.png/revision/latest?cb=20190714151809`);
