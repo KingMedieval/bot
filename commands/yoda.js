@@ -22,7 +22,7 @@ module.exports = {
       yodishEmbed.setImage(`https://vignette.wikia.nocookie.net/lego-videogames/images/5/5f/Yoda.png/revision/latest?cb=20190714151809`);
       message.channel.send(yodishEmbed);
     }
-    else {
+        else {
       message.channel.send('API broke, it did');
     }
   }

@@ -13,7 +13,8 @@
     "ytdl-core": "^3.1.0",
     "ytdl-core-discord": "1.2.0",
     "got": "11.3.0",
-    "genius-lyrics-api": "3.0.2"
+    "genius-lyrics-api": "3.0.2",
+    "string-progressbar": "1.0.1"
   },
   "scripts": {
     "start": "node index.js"
