@@ -13,5 +13,6 @@ module.exports = {
     queue.songs = [];
     queue.connection.dispatcher.end();
     queue.textChannel.send(`${message.author} ⏹ stopped the music!`).catch(console.error);
+
   }
-};
+}; 
