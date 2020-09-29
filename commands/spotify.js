@@ -1,15 +1,20 @@
 const { play } = require("../include/play");
+const { MessageEmbed } = require("discord.js");
 const { YOUTUBE_API_KEY } = require("../config.json");
+const { SPOTIFY_ID, SPOTIFY_SECRET } = require("../config.json");
 const ytdl = require("ytdl-core");
 const YouTubeAPI = require("simple-youtube-api");
 const youtube = new YouTubeAPI(YOUTUBE_API_KEY);
+const fetch = require('node-fetch');
+const SpotifyWebApi = require('spotify-web-api-node');
 
 module.exports = {
-  name: "play",
-  cooldown: 3,
-  aliases: ["p"],
-  description: "Plays audio from YouTube",
+  name: "spotify",
+  cooldown: 30,
+  aliases: ["sp"],
+  description: "Plays spotify playlist (for now)",
   async execute(message, args) {
+
     const { channel } = message.member.voice;
 
     const serverQueue = message.client.queue.get(message.guild.id);
@@ -28,19 +33,31 @@ module.exports = {
     if (!permissions.has("SPEAK"))
       return message.reply("I cannot speak in this voice channel, make sure I have the proper permissions!");
 
-    const search = args.join(" ");
-    const videoPattern = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/gi;
-    const playlistPattern = /^.*(list=)([^#\&\?]*).*/gi;
-    const url = args[0];
-    const urlValid = videoPattern.test(args[0]);
+    const searchLink = args.join(" "); //spotify link
 
-    // Start the playlist if playlist url was provided
-    if (!videoPattern.test(args[0]) && playlistPattern.test(args[0])) {
-      return message.client.commands.get("playlist").execute(message, args);
+    const search = searchLink.slice(34, 56)
+
+    let tokenRes = await fetch('http://localhost:3000/token').then((res) => {
+      status = res.status;
+      return res.json()
+    });
+    if (status == 200) {
+      token = tokenRes.token;
     }
-    else if (search.toLowerCase().indexOf("https://open.spotify.com/") >= 0) {
-      return message.client.commands.get("spotify").execute(message, args);
+    else {
+      message.channel.send('Spotify API error')
     }
+
+    console.log(token);
+
+    console.log(search)
+
+    var spotifyApi = new SpotifyWebApi();
+
+    spotifyApi.setAccessToken(token);
+
+spotifyApi.getPlaylist(search)
+  .then(async function(data) {
 
     const queueConstruct = {
       textChannel: message.channel,
@@ -52,30 +69,14 @@ module.exports = {
       playing: true
     };
 
-    let songInfo = null;
     let song = null;
+    let playlist = null;
+    let videos = [];
 
-    if (urlValid) {
-      try {
-        songInfo = await ytdl.getInfo(url);
-        song = {
-          title: songInfo.videoDetails.title,
-          url: songInfo.videoDetails.video_url,
-          duration: songInfo.videoDetails.lengthSeconds
-        };
-      } catch (error) {
-        if (error.message.includes("copyright")) {
-          return message
-            .reply("⛔ The video could not be played due to copyright protection ⛔")
-            .catch(console.error);
-        } else {
-          console.error(error);
-          return message.reply(error.message).catch(console.error);
-        }
-      }
-    } else {
-      try {
-        const results = await youtube.searchVideos(search, 1);
+    for (let i = 0; i < data.body.tracks.items.length; i++) {
+        try {
+        let trackAndArtist = `${data.body.tracks.items[i].track.name} ${data.body.tracks.items[i].track.artists[0].name} - Topic`
+        const results = await youtube.searchVideos(trackAndArtist, 1, { videoCategoryId: "10" });
         songInfo = await ytdl.getInfo(results[0].url);
         song = {
           title: songInfo.videoDetails.title,
@@ -84,19 +85,27 @@ module.exports = {
         };
       } catch (error) {
         console.error(error);
-        return message.reply("No video was found with a matching title").catch(console.error);
       }
+      if (serverQueue) {
+        serverQueue.songs.push(song);
+        return serverQueue.textChannel
+          .send(`✅ **${song.title}** has been added to the queue by ${message.author}`)
+          .catch(console.error);
+      }
+
+      queueConstruct.songs.push(song);
+      message.client.queue.set(message.guild.id, queueConstruct);
     }
 
-    if (serverQueue) {
-      serverQueue.songs.push(song);
-      return serverQueue.textChannel
-        .send(`✅ **${song.title}** has been added to the queue by ${message.author}`)
-        .catch(console.error);
-    }
+    let playlistEmbed = new MessageEmbed()
+      .setTitle(`${data.body.name}`)
+      .setURL(data.body.external_urls.spotify)
+      .setColor("#F8AA2A")
+      .setTimestamp();
 
-    queueConstruct.songs.push(song);
-    message.client.queue.set(message.guild.id, queueConstruct);
+
+    message.channel.send(`${message.author} Started a playlist`, playlistEmbed);
+
 
     try {
       queueConstruct.connection = await channel.join();
@@ -107,5 +116,13 @@ module.exports = {
       await channel.leave();
       return message.channel.send(`Could not join the channel: ${error}`).catch(console.error);
     }
-  }
+  }, function(err) {
+    console.error(err);
+  });
+
+  //const noItems = playlistRes.tracks.items[0].track.name;
+
+
+
+}
 };

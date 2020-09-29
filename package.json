@@ -14,7 +14,10 @@
     "ytdl-core-discord": "1.2.0",
     "got": "11.3.0",
     "genius-lyrics-api": "3.0.2",
-    "string-progressbar": "1.0.1"
+    "string-progressbar": "1.0.1",
+    "express": "4.13.3",
+    "request": "^2.74.0",
+    "spotify-web-api-node": "4.0.0"
   },
   "scripts": {
     "start": "node index.js"
