@@ -15,4 +15,4 @@ module.exports = {
     queue.textChannel.send(`${message.author} ⏹ stopped the music!`).catch(console.error);
 
   }
-}; 
+};

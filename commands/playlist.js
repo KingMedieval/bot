@@ -1,7 +1,19 @@
 const { MessageEmbed } = require("discord.js");
 const { play } = require("../include/play");
-const { YOUTUBE_API_KEY, MAX_PLAYLIST_SIZE } = require("../config.json");
 const YouTubeAPI = require("simple-youtube-api");
+const scdl = require("soundcloud-downloader");
+
+let YOUTUBE_API_KEY, SOUNDCLOUD_CLIENT_ID, MAX_PLAYLIST_SIZE;
+try {
+  const config = require("../config.json");
+  YOUTUBE_API_KEY = config.YOUTUBE_API_KEY;
+  SOUNDCLOUD_CLIENT_ID = config.SOUNDCLOUD_CLIENT_ID;
+  MAX_PLAYLIST_SIZE = config.MAX_PLAYLIST_SIZE;
+} catch (error) {
+  YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
+  SOUNDCLOUD_CLIENT_ID = process.env.SOUNDCLOUD_CLIENT_ID;
+  MAX_PLAYLIST_SIZE = process.env.MAX_PLAYLIST_SIZE;
+}
 const youtube = new YouTubeAPI(YOUTUBE_API_KEY);
 
 module.exports = {
@@ -51,17 +63,29 @@ module.exports = {
     if (urlValid) {
       try {
         playlist = await youtube.getPlaylist(url, { part: "snippet" });
-        videos = await playlist.getVideos(MAX_PLAYLIST_SIZE, { part: "snippet" });
+        videos = await playlist.getVideos(MAX_PLAYLIST_SIZE || 10, { part: "snippet" });
       } catch (error) {
         console.error(error);
+        return message.reply("Playlist not found :(").catch(console.error);
+      }
+    } else if (scdl.isValidUrl(args[0])) {
+      if (args[0].includes("/sets/")) {
+        message.channel.send("⌛ fetching the playlist...");
+        playlist = await scdl.getSetInfo(args[0], SOUNDCLOUD_CLIENT_ID);
+        videos = playlist.tracks.map((track) => ({
+          title: track.title,
+          url: track.permalink_url,
+          duration: track.duration / 1000
+        }));
       }
     } else {
       try {
         const results = await youtube.searchPlaylists(search, 1, { part: "snippet" });
         playlist = results[0];
-        videos = await playlist.getVideos(MAX_PLAYLIST_SIZE, { part: "snippet" });
+        videos = await playlist.getVideos(MAX_PLAYLIST_SIZE || 10, { part: "snippet" });
       } catch (error) {
         console.error(error);
+        return message.reply("Playlist not found :(").catch(console.error);
       }
     }
 
@@ -102,11 +126,11 @@ module.exports = {
 
     if (!serverQueue) {
       try {
-        const connection = await channel.join();
-        queueConstruct.connection = connection;
+        queueConstruct.connection = await channel.join();
+        await queueConstruct.connection.voice.setSelfDeaf(true);
         play(queueConstruct.songs[0], message);
       } catch (error) {
-        console.error(`Could not join voice channel: ${error}`);
+        console.error(error);
         message.client.queue.delete(message.guild.id);
         await channel.leave();
         return message.channel.send(`Could not join the channel: ${error}`).catch(console.error);

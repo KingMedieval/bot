@@ -1,9 +1,19 @@
 const ytdlDiscord = require("ytdl-core-discord");
-const { canModifyQueue } = require("../util/botUtil");
+const scdl = require("soundcloud-downloader");
+const { canModifyQueue } = require("../util/EvobotUtil");
 
 module.exports = {
   async play(song, message) {
-    const { PRUNING } = require("../config.json");
+    let PRUNING, SOUNDCLOUD_CLIENT_ID;
+
+    try {
+      const config = require("../config.json");
+      PRUNING = config.PRUNING;
+      SOUNDCLOUD_CLIENT_ID = config.SOUNDCLOUD_CLIENT_ID;
+    } catch (error) {
+      PRUNING = process.env.PRUNING;
+      SOUNDCLOUD_CLIENT_ID = process.env.SOUNDCLOUD_CLIENT_ID;
+    }
     const queue = message.client.queue.get(message.guild.id);
 
     if (!song) {
@@ -12,32 +22,44 @@ module.exports = {
       return queue.textChannel.send("🚫 Music queue ended.").catch(console.error);
     }
 
+    let stream = null;
+    let streamType = song.url.includes("youtube.com") ? "opus" : "ogg/opus";
+
     try {
-      var stream = await ytdlDiscord(song.url, { highWaterMark: 1 << 25 });
+      if (song.url.includes("youtube.com")) {
+        stream = await ytdlDiscord(song.url, { highWaterMark: 1 << 25 });
+      } else if (song.url.includes("soundcloud.com")) {
+        try {
+          stream = await scdl.downloadFormat(
+            song.url,
+            scdl.FORMATS.OPUS,
+            SOUNDCLOUD_CLIENT_ID ? SOUNDCLOUD_CLIENT_ID : undefined
+          );
+        } catch (error) {
+          stream = await scdl.downloadFormat(
+            song.url,
+            scdl.FORMATS.MP3,
+            SOUNDCLOUD_CLIENT_ID ? SOUNDCLOUD_CLIENT_ID : undefined
+          );
+          streamType = "unknown";
+        }
+      }
     } catch (error) {
       if (queue) {
         queue.songs.shift();
         module.exports.play(queue.songs[0], message);
       }
 
-      if (error.message.includes("copyright")) {
-        return message.channel
-          .send("⛔ A video could not be played due to copyright protection ⛔")
-          .catch(console.error);
-      } else {
-        console.error(error);
-      }
+      console.error(error);
+      return message.channel.send(`Error: ${error.message ? error.message : error}`);
     }
 
     queue.connection.on("disconnect", () => message.client.queue.delete(message.guild.id));
 
     const dispatcher = queue.connection
-      .play(stream, { type: "opus" })
+      .play(stream, { type: streamType })
       .on("finish", () => {
         if (collector && !collector.ended) collector.stop();
-
-        if (PRUNING && playingMessage && !playingMessage.deleted)
-          playingMessage.delete().catch(console.error);
 
         if (queue.loop) {
           // if loop is on, push the song back at the end of the queue
@@ -62,6 +84,9 @@ module.exports = {
       var playingMessage = await queue.textChannel.send(`🎶 Started playing: **${song.title}** ${song.url}`);
       await playingMessage.react("⏭");
       await playingMessage.react("⏯");
+      await playingMessage.react("🔇");
+      await playingMessage.react("🔉");
+      await playingMessage.react("🔊");
       await playingMessage.react("🔁");
       await playingMessage.react("⏹");
     } catch (error) {
@@ -101,6 +126,42 @@ module.exports = {
           }
           break;
 
+        case "🔇":
+          reaction.users.remove(user).catch(console.error);
+          if (!canModifyQueue(member)) return;
+          if (queue.volume <= 0) {
+            queue.volume = 100;
+            queue.connection.dispatcher.setVolumeLogarithmic(100 / 100);
+            queue.textChannel.send(`${user} 🔊 unmuted the music!`).catch(console.error);
+          } else {
+            queue.volume = 0;
+            queue.connection.dispatcher.setVolumeLogarithmic(0);
+            queue.textChannel.send(`${user} 🔇 muted the music!`).catch(console.error);
+          }
+          break;
+
+        case "🔉":
+          reaction.users.remove(user).catch(console.error);
+          if (!canModifyQueue(member)) return;
+          if (queue.volume - 10 <= 0) queue.volume = 0;
+          else queue.volume = queue.volume - 10;
+          queue.connection.dispatcher.setVolumeLogarithmic(queue.volume / 100);
+          queue.textChannel
+            .send(`${user} 🔉 decreased the volume, the volume is now ${queue.volume}%`)
+            .catch(console.error);
+          break;
+
+        case "🔊":
+          reaction.users.remove(user).catch(console.error);
+          if (!canModifyQueue(member)) return;
+          if (queue.volume + 10 >= 100) queue.volume = 100;
+          else queue.volume = queue.volume + 10;
+          queue.connection.dispatcher.setVolumeLogarithmic(queue.volume / 100);
+          queue.textChannel
+            .send(`${user} 🔊 increased the volume, the volume is now ${queue.volume}%`)
+            .catch(console.error);
+          break;
+
         case "🔁":
           reaction.users.remove(user).catch(console.error);
           if (!canModifyQueue(member)) return;
@@ -130,6 +191,9 @@ module.exports = {
 
     collector.on("end", () => {
       playingMessage.reactions.removeAll().catch(console.error);
+      if (PRUNING && playingMessage && !playingMessage.deleted) {
+        playingMessage.delete({ timeout: 3000 }).catch(console.error);
+      }
     });
   }
 };
