@@ -72,7 +72,7 @@ spotifyApi.getPlaylist(search)
     let song = null;
     let playlist = null;
 
-    for (let i = 0; i < data.body.tracks.items.length; i++) {
+    for (let i = 0; i < data.body.tracks.items.length) {
         try {
         let trackAndArtist = `${data.body.tracks.items[i].track.name} ${data.body.tracks.items[i].track.artists[0].name} - Topic`
         const results = await youtube.searchVideos(trackAndArtist, 1, { videoCategoryId: "10" });
@@ -88,12 +88,12 @@ spotifyApi.getPlaylist(search)
       if (serverQueue) {
         serverQueue.songs.push(song);
         return serverQueue.textChannel
-          .send(`✅ **${song.title}** has been added to the queue by ${message.author}`)
           .catch(console.error);
       }
 
       queueConstruct.songs.push(song);
       message.client.queue.set(message.guild.id, queueConstruct);
+      i++;
     }
 
     let playlistEmbed = new MessageEmbed()
