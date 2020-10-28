@@ -71,9 +71,8 @@ spotifyApi.getPlaylist(search)
 
     let song = null;
     let playlist = null;
-    let videos = [];
 
-    /*for (let i = 0; i < data.body.tracks.items.length; i++) {
+    for (let i = 0; i < data.body.tracks.items.length; i++) {
         try {
         let trackAndArtist = `${data.body.tracks.items[i].track.name} ${data.body.tracks.items[i].track.artists[0].name} - Topic`
         const results = await youtube.searchVideos(trackAndArtist, 1, { videoCategoryId: "10" });
@@ -83,7 +82,6 @@ spotifyApi.getPlaylist(search)
           url: songInfo.videoDetails.video_url,
           duration: songInfo.videoDetails.lengthSeconds
         };
-
       } catch (error) {
         console.error(error);
       }
@@ -110,26 +108,21 @@ spotifyApi.getPlaylist(search)
 
     try {
       queueConstruct.connection = await channel.join();
+      await queueConstruct.connection.voice.setSelfDeaf(true);
       play(queueConstruct.songs[0], message);
     } catch (error) {
-      console.error(`Could not join voice channel: ${error}`);
+      console.error(error);
       message.client.queue.delete(message.guild.id);
       await channel.leave();
       return message.channel.send(`Could not join the channel: ${error}`).catch(console.error);
-    }*/
-    for (let i = 0; i < data.body.tracks.items.length; i++) {
-        try {
-        let trackAndArtist = `${data.body.tracks.items[i].track.name} ${data.body.tracks.items[i].track.artists[0].name} - Topic`
-        message.client.commands.get("play").execute(message, trackAndArtist);
-
-      } catch (error) {
-        console.error(error);
-      }
     }
+  }, function(err) {
+    console.error(err);
+  });
+
   //const noItems = playlistRes.tracks.items[0].track.name;
 
 
 
-})
 }
 };
