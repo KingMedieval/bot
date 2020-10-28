@@ -125,9 +125,11 @@ spotifyApi.getPlaylist(search)
       } catch (error) {
         console.error(error);
       }
+    }
   //const noItems = playlistRes.tracks.items[0].track.name;
 
 
 
+}
 }
 };
