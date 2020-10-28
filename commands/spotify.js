@@ -76,17 +76,18 @@ spotifyApi.getPlaylist(search)
     for (let i = 0; i < data.body.tracks.items.length; i++) {
         try {
         let trackAndArtist = `${data.body.tracks.items[i].track.name} ${data.body.tracks.items[i].track.artists[0].name} - Topic`
-        const results = await youtube.searchVideos(trackAndArtist, 1, { videoCategoryId: "10" });
+        /*const results = await youtube.searchVideos(trackAndArtist, 1, { videoCategoryId: "10" });
         songInfo = await ytdl.getInfo(results[0].url);
         song = {
           title: songInfo.videoDetails.title,
           url: songInfo.videoDetails.video_url,
           duration: songInfo.videoDetails.lengthSeconds
-        };
+        };*/
+        message.client.commands.get("play").execute(message, trackAndArtist);
       } catch (error) {
         console.error(error);
       }
-      if (serverQueue) {
+      /*if (serverQueue) {
         serverQueue.songs.push(song);
         return serverQueue.textChannel
           .send(`✅ **${song.title}** has been added to the queue by ${message.author}`)
@@ -95,7 +96,7 @@ spotifyApi.getPlaylist(search)
 
       queueConstruct.songs.push(song);
       message.client.queue.set(message.guild.id, queueConstruct);
-    }
+    }*/
 
     let playlistEmbed = new MessageEmbed()
       .setTitle(`${data.body.name}`)
@@ -107,7 +108,7 @@ spotifyApi.getPlaylist(search)
     message.channel.send(`${message.author} Started a playlist`, playlistEmbed);
 
 
-    try {
+    /*try {
       queueConstruct.connection = await channel.join();
       play(queueConstruct.songs[0], message);
     } catch (error) {
@@ -115,7 +116,7 @@ spotifyApi.getPlaylist(search)
       message.client.queue.delete(message.guild.id);
       await channel.leave();
       return message.channel.send(`Could not join the channel: ${error}`).catch(console.error);
-    }
+    }*/
   }, function(err) {
     console.error(err);
   });
