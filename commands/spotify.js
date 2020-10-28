@@ -75,6 +75,7 @@ spotifyApi.getPlaylist(search)
     for (let i = 0; i < data.body.tracks.items.length;) {
         try {
         let trackAndArtist = `${data.body.tracks.items[i].track.name} ${data.body.tracks.items[i].track.artists[0].name} - Topic`
+        console.log(trackAndArtist);
         const results = await youtube.searchVideos(trackAndArtist, 1, { videoCategoryId: "10" });
         songInfo = await ytdl.getInfo(results[0].url);
         song = {
