@@ -130,6 +130,6 @@ spotifyApi.getPlaylist(search)
 
 
 
-}
+})
 }
 };
