@@ -1,10 +1,10 @@
 const ytdlDiscord = require("ytdl-core-discord");
 const scdl = require("soundcloud-downloader");
-const { canModifyQueue, STAY_TIME } = require("../util/EvobotUtil");
+const { canModifyQueue, STAY_TIME } = require("../util/botUtil");
 
 module.exports = {
   async play(song, message) {
-    const { SOUNDCLOUD_CLIENT_ID } = require("../util/EvobotUtil");
+    const { SOUNDCLOUD_CLIENT_ID } = require("../util/botUtil");
 
     let config;
 
