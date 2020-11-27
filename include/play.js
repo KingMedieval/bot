@@ -1,10 +1,10 @@
 const ytdlDiscord = require("ytdl-core-discord");
 const scdl = require("soundcloud-downloader");
-const { canModifyQueue, STAY_TIME } = require("../util/botUtil");
+const { canModifyQueue, STAY_TIME } = require("../config.jsonl");
 
 module.exports = {
   async play(song, message) {
-    const { SOUNDCLOUD_CLIENT_ID } = require("../util/botUtil");
+    const { SOUNDCLOUD_CLIENT_ID } = require("../config.json");
 
     let config;
 
@@ -14,7 +14,7 @@ module.exports = {
       config = null;
     }
 
-    const PRUNING = config ? config.PRUNING : process.env.PRUNING;
+    const { PRUNING } = require("../config.json");
 
     const queue = message.client.queue.get(message.guild.id);
 
