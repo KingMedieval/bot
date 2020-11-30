@@ -53,7 +53,7 @@ function video(message) {
             data += chunk;
           });
           resp.on('end', () => {
-            mp4Link = JSON.parse(data).gfyItem.mp4Url;
+            mp4Link = JSON.parse(data).gfyItem.mobileUrl;
             message.channel.send(mp4Link)
 
 
@@ -74,7 +74,7 @@ function video(message) {
             data += chunk;
           });
           resp.on('end', () => {
-            mp4Link = JSON.parse(data).gfyItem.mp4Url;
+            mp4Link = JSON.parse(data).gfyItem.mobileUrl;
             message.channel.send(mp4Link)
 
 
@@ -95,7 +95,7 @@ function video(message) {
             data += chunk;
           });
           resp.on('end', () => {
-            mp4Link = JSON.parse(data).gfyItem.mp4Url;
+            mp4Link = JSON.parse(data).gfyItem.mobileUrl;
             message.channel.send(mp4Link)
 
 
@@ -116,7 +116,7 @@ function video(message) {
             data += chunk;
           });
           resp.on('end', () => {
-            mp4Link = JSON.parse(data).gfyItem.mp4Url;
+            mp4Link = JSON.parse(data).gfyItem.mobileUrl;
             message.channel.send(mp4Link)
 
 
@@ -137,7 +137,7 @@ function video(message) {
             data += chunk;
           });
           resp.on('end', () => {
-            mp4Link = JSON.parse(data).gfyItem.mp4Url;
+            mp4Link = JSON.parse(data).gfyItem.mobileUrl;
             message.channel.send(mp4Link)
 
 
