@@ -44,11 +44,7 @@ function video(message) {
   got(sauce).then(response => {
       let content = JSON.parse(response.body);
       let nsfwGIFNEWImage = content[0].data.children[0].data.url;
-      if (nsfwGIFNEWImage.toLowerCase().indexOf("https://i.redd.it") >= 0 || nsfwGIFNEWImage.toLowerCase().indexOf("https://i.imgur.com") >= 0 || nsfwGIFNEWImage.toLowerCase().indexOf("https://imgur.com") >= 0) {
-        message.channel.send(nsfwGIFNEWImage)
-      console.log('Bot responded with: ' + nsfwGIFNEWImage);
-      }
-      else if (nsfwGIFNEWImage.toLowerCase().indexOf("https://redgifs.com") >= 0) {
+      if (nsfwGIFNEWImage.toLowerCase().indexOf("https://redgifs.com") >= 0) {
         let redID = nsfwGIFNEWImage.slice(26);
         redAPI = `https://api.redgifs.com/v1/gfycats/${redID}`;
         https.get(redAPI, (resp) => {
@@ -59,7 +55,7 @@ function video(message) {
           resp.on('end', () => {
             mp4Link = JSON.parse(data).gfyItem.mp4Url;
             message.channel.send(mp4Link)
-              .then(sent => sent.react('❌'))
+
 
             console.log('Bot responded with: ' + nsfwGIFNEWImage);
           });
@@ -80,7 +76,7 @@ function video(message) {
           resp.on('end', () => {
             mp4Link = JSON.parse(data).gfyItem.mp4Url;
             message.channel.send(mp4Link)
-              .then(sent => sent.react('❌'))
+
 
             console.log('Bot responded with: ' + nsfwGIFNEWImage);
           });
@@ -101,7 +97,7 @@ function video(message) {
           resp.on('end', () => {
             mp4Link = JSON.parse(data).gfyItem.mp4Url;
             message.channel.send(mp4Link)
-              .then(sent => sent.react('❌'))
+
 
             console.log('Bot responded with: ' + nsfwGIFNEWImage);
           });
@@ -122,7 +118,7 @@ function video(message) {
           resp.on('end', () => {
             mp4Link = JSON.parse(data).gfyItem.mp4Url;
             message.channel.send(mp4Link)
-              .then(sent => sent.react('❌'))
+
 
             console.log('Bot responded with: ' + nsfwGIFNEWImage);
           });
@@ -143,7 +139,7 @@ function video(message) {
           resp.on('end', () => {
             mp4Link = JSON.parse(data).gfyItem.mp4Url;
             message.channel.send(mp4Link)
-              .then(sent => sent.react('❌'))
+
 
             console.log('Bot responded with: ' + nsfwGIFNEWImage);
           });
