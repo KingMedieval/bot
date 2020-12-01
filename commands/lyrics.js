@@ -11,6 +11,7 @@ module.exports = {
   name: "lyrics",
   description: "lyrics",
   async execute(message, args) {
+    const queue = message.client.queue.get(message.guild.id);
     let lyricsEmbed = new MessageEmbed();
     let lyricsEmbedTwo = new MessageEmbed();
     let lyricsEmbedThree = new MessageEmbed();
