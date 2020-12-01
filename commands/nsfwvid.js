@@ -44,6 +44,8 @@ function video(message) {
   got(sauce).then(response => {
       let content = JSON.parse(response.body);
       let nsfwGIFNEWImage = content[0].data.children[0].data.url;
+      console.log(sauce);
+      console.log(nsfwGIFNEWImage);
       if (nsfwGIFNEWImage.toLowerCase().indexOf("https://redgifs.com") >= 0) {
         let redID = nsfwGIFNEWImage.slice(26);
         redAPI = `https://api.redgifs.com/v1/gfycats/${redID}`;
