@@ -8,16 +8,22 @@ const { getLyrics , getSong } = require('genius-lyrics-api');
 global.title = ' ';
 
 module.exports = {
-  name: "tmplyrics",
+  name: "lyrics",
   description: "lyrics",
   async execute(message, args) {
     let lyricsEmbed = new MessageEmbed();
     let lyricsEmbedTwo = new MessageEmbed();
     let lyricsEmbedThree = new MessageEmbed();
     let lyricsEmbedFour = new MessageEmbed();
-    if (!args.length)
-      return message.reply(`Usage: ${message.client.prefix}${module.exports.name} <Song Name>`).catch(console.error);
-    const searchTitle = args.join(" ");
+    if (!args.length && !queue)
+        return message.reply(`Usage: ${message.client.prefix}${module.exports.name} <Song Name>`).catch(console.error);
+    else if (!args.length) {
+      const song = queue.songs[0];
+      searchTitle = song.title;
+    }
+    else {
+      searchTitle = args.join(" ");
+    }
     const options = {
     apiKey: GENIUS_API_KEY,
     title: searchTitle,
