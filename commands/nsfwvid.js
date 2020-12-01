@@ -7,7 +7,7 @@ var sauce;
 var webm;
 
 module.exports = {
-  name: "nvid",
+  name: "nsfwvid",
   description: "🔞",
   execute(message) {
     video(message);
@@ -53,7 +53,12 @@ function video(message) {
             data += chunk;
           });
           resp.on('end', () => {
-            mp4Link = JSON.parse(data).gfyItem.mobileUrl;
+            if(typeof JSON.parse(data).gfyItem.mobileUrl !== 'undefined') {
+              mp4Link = JSON.parse(data).gfyItem.mobileUrl;
+            }
+            else {
+              mp4Link = JSON.parse(data).gfyItem.mp4Url;
+              }
             message.channel.send(mp4Link)
 
 
@@ -74,7 +79,12 @@ function video(message) {
             data += chunk;
           });
           resp.on('end', () => {
-            mp4Link = JSON.parse(data).gfyItem.mobileUrl;
+            if(typeof JSON.parse(data).gfyItem.mobileUrl !== 'undefined') {
+              mp4Link = JSON.parse(data).gfyItem.mobileUrl;
+            }
+            else {
+              mp4Link = JSON.parse(data).gfyItem.mp4Url;
+              }
             message.channel.send(mp4Link)
 
 
@@ -95,7 +105,12 @@ function video(message) {
             data += chunk;
           });
           resp.on('end', () => {
-            mp4Link = JSON.parse(data).gfyItem.mobileUrl;
+            if(typeof JSON.parse(data).gfyItem.mobileUrl !== 'undefined') {
+              mp4Link = JSON.parse(data).gfyItem.mobileUrl;
+            }
+            else {
+              mp4Link = JSON.parse(data).gfyItem.mp4Url;
+              }
             message.channel.send(mp4Link)
 
 
@@ -116,7 +131,12 @@ function video(message) {
             data += chunk;
           });
           resp.on('end', () => {
-            mp4Link = JSON.parse(data).gfyItem.mobileUrl;
+            if(typeof JSON.parse(data).gfyItem.mobileUrl !== 'undefined') {
+              mp4Link = JSON.parse(data).gfyItem.mobileUrl;
+            }
+            else {
+              mp4Link = JSON.parse(data).gfyItem.mp4Url;
+              }
             message.channel.send(mp4Link)
 
 
@@ -137,7 +157,12 @@ function video(message) {
             data += chunk;
           });
           resp.on('end', () => {
-            mp4Link = JSON.parse(data).gfyItem.mobileUrl;
+            if(typeof JSON.parse(data).gfyItem.mobileUrl !== 'undefined') {
+              mp4Link = JSON.parse(data).gfyItem.mobileUrl;
+            }
+            else {
+              mp4Link = JSON.parse(data).gfyItem.mp4Url;
+              }
             message.channel.send(mp4Link)
 
 
