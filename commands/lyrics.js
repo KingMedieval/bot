@@ -29,7 +29,7 @@ module.exports = {
     apiKey: GENIUS_API_KEY,
     title: searchTitle,
     artist: ' ',
-    optimizeQuery: true
+    optimizeQuery: false
 };
 
 //getLyrics(options).then((lyrics) => console.log(lyrics));
