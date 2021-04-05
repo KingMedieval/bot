@@ -19,8 +19,8 @@ const cooldowns = new Collection();
  */
 client.on("ready", () => {
   console.log(`${client.user.username} ready!`);
-  client.user.setActivity(".help | made by Stalin", {
-    type: "STREAMING", url: "https://www.youtube.com/watch?v=FnFFR3B6S9E" //url: "https://www.twitch.tv/bobross"
+  client.user.setActivity(".help | @TOMI", {
+    type: "STREAMING", url: "https://www.youtube.com/watch?v=ZyhrYis509A" //url: "https://www.twitch.tv/bobross"
   });
 });
 client.on("warn", (info) => console.log(info));
